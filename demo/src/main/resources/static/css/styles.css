@@ -1,0 +1,751 @@
+/* Layout adjustments for wider sections */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1412px; /* Increased by 7% from original 1320px */
+  }
+  
+  /* Adjust column sizes to reduce gallery area by 25% */
+  .gallery-column {
+    width: 37.5% !important; /* 50% - 25% = 37.5% */
+    flex: 0 0 37.5% !important;
+    max-width: 37.5% !important;
+  }
+  
+  .deck-column {
+    width: 62.5% !important; /* 50% + 25% = 62.5% */
+    flex: 0 0 62.5% !important;
+    max-width: 62.5% !important;
+  }
+}
+
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1605px; /* Increased by 7% from original 1500px */
+  }
+}
+
+/* Card Gallery Styles */
+.card-container {
+  position: relative;
+  height: 250px; /* Reduced from 300px to maintain proportion */
+  margin-bottom: 0.75rem; /* Reduced from 1rem */
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.card-container.hidden {
+  display: none !important;
+}
+
+.tcg-card {
+  position: relative;
+  height: 100%;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.2s;
+  cursor: pointer; /* Add cursor pointer to indicate interactivity */
+}
+
+.tcg-card:hover {
+  transform: translateY(-5px);
+}
+
+.tcg-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background-color: #f8f9fa;
+}
+
+/* Card badges removed as requested */
+/* 
+.card-badges {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  z-index: 1;
+}
+*/
+
+.badge {
+  padding: 0.5em 0.75em;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.rarity-badge {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+}
+
+.rarity-common {
+  background-color: #b0bec5;
+}
+
+.rarity-uncommon {
+  background-color: #4caf50;
+}
+
+.rarity-rare {
+  background-color: #2196f3;
+}
+
+.rarity-super-rare {
+  background-color: #9c27b0;
+}
+
+.rarity-ultra-rare {
+  background-color: #ff9800;
+}
+
+.rarity-secret-ultra-rare {
+  background-color: #f44336;
+}
+
+.energy-badge {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+}
+
+.energy-green {
+  background-color: #4caf50;
+}
+
+.energy-blue {
+  background-color: #2196f3;
+}
+
+.energy-red {
+  background-color: #f44336;
+}
+
+.energy-yellow {
+  background-color: #ffc107;
+}
+
+.energy-purple {
+  background-color: #9c27b0;
+}
+
+.hp-badge {
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+}
+
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+  padding: 0.75rem; /* Reduced from 1rem */
+}
+
+.tcg-card:hover .card-overlay {
+  opacity: 1;
+}
+
+.card-info {
+  color: white;
+  text-align: center;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.card-info h5 {
+  margin-bottom: 0.3rem; /* Reduced from 0.5rem */
+  font-size: 0.9rem; /* Reduced from 1rem */
+}
+
+.card-description {
+  font-size: 0.75rem; /* Reduced from 0.8rem */
+  margin-bottom: 0.3rem; /* Reduced from 0.5rem */
+}
+
+.artist {
+  font-size: 0.8rem;
+  color: #ccc;
+}
+
+/* Filter styles */
+.filter-section {
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.filter-title {
+  font-size: 0.94rem;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.filter-badge {
+  display: inline-block;
+  padding: 0.25rem 0.4rem;
+  margin: 0.125rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+  position: relative;
+  font-size: 0.83rem;
+}
+
+.filter-badge:hover {
+  transform: translateY(-1px); /* Reduced lift effect */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Reduced shadow on hover */
+}
+
+.filter-badge.active {
+  border-color: #000;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  /* Keep original background color */
+}
+
+.energy-filter-mix {
+  background-color: #6c757d;
+  color: white;
+}
+
+.energy-mix {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* Energy filter colors */
+.energy-filter-green {
+  background-color: #4caf50;
+  color: white;
+}
+
+.energy-filter-blue {
+  background-color: #2196f3;
+  color: white;
+}
+
+.energy-filter-red {
+  background-color: #f44336;
+  color: white;
+}
+
+.energy-filter-yellow {
+  background-color: #ffc107;
+  color: black;
+}
+
+.energy-filter-purple {
+  background-color: #9c27b0;
+  color: white;
+}
+
+/* Flip Filter colors */
+.flip-filter-yes {
+  background-color: #00bcd4;
+  color: white;
+}
+
+.flip-filter-no {
+  background-color: #ff9800;
+  color: white;
+}
+
+/* Rarity filter colors */
+.rarity-filter-common,
+.rarity-filter-uncommon,
+.rarity-filter-rare,
+.rarity-filter-super-rare,
+.rarity-filter-ultra-rare,
+.rarity-filter-secret-rare,
+.rarity-filter-secret-super-rare,
+.rarity-filter-secret-ultra-rare,
+.rarity-filter-promotion {
+  background-color: #f8f9fa;
+  color: #212529;
+  border: 1px solid #dee2e6;
+}
+
+/* Deck list styles */
+.deck-list {
+  max-height: none; /* Remove max-height to prevent scrolling */
+  overflow-y: visible; /* Remove scroll behavior */
+}
+
+/* Sticky deck section */
+.sticky-deck {
+  position: sticky;
+  top: 20px;
+  z-index: 100;
+  transition: top 0.2s ease-in-out;
+}
+
+#empty-deck-message {
+  padding: 1.5rem;
+  text-align: center;
+  color: #6c757d;
+  border: 1px dashed #dee2e6;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Deck card styles for grid layout */
+.deck-card-item {
+  height: 220px; /* Restored to original height */
+  margin-bottom: 1rem;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: #f8f9fa;
+}
+
+.deck-card-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #f0f0f0 0%, #f8f8f8 50%, #f0f0f0 100%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  z-index: 1;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.deck-card-item .tcg-card {
+  height: 100%;
+  width: 100%;
+  /* Apply the transition only to transform, not to dimensions */
+  transition: transform 0.2s;
+  position: relative;
+  z-index: 2;
+}
+
+/* Apply strict sizing to images in deck cards to prevent initial full-size display */
+.deck-card-item .tcg-card img {
+  max-height: 100% !important;
+  max-width: 100% !important;
+  width: auto !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block !important; /* Force block display */
+  margin: 0 auto !important; /* Center the image */
+}
+
+/* Image preloading to prevent flickering and full-size appearance */
+.preloaded-image {
+  opacity: 0;
+  animation: none !important; /* Disable animation until loaded */
+}
+
+.image-loaded {
+  animation: fadeIn 0.3s ease-in forwards !important;
+}
+
+/* When image is loaded, hide the loading shimmer */
+.image-loaded + .card-overlay {
+  z-index: 3;
+}
+
+.deck-card-item img.image-loaded ~ div::before {
+  display: none;
+}
+
+.deck-card-item img.image-loaded ~ .card-overlay {
+  z-index: 3;
+}
+
+.image-loaded ~ .card-overlay {
+  z-index: 3;
+}
+
+.deck-card-item:has(img.image-loaded)::before {
+  display: none;
+}
+
+.deck-section-content .card-count-badge {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  z-index: 2;
+}
+
+/* Admin styles */
+.admin-card-image {
+  max-width: 100px;
+  max-height: 140px;
+  object-fit: contain;
+}
+
+/* Loading indicator styles */
+.filter-badge {
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-badge.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Change to semi-transparent black */
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+/* Add grid container styles */
+.card-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Base size for general use */
+  gap: 0.75rem; /* Reduced from 1rem to create tighter spacing */
+  align-items: start;
+  max-height: calc(100vh - 350px); /* Set max height for gallery */
+  overflow-y: auto; /* Add vertical scrolling */
+  padding-right: 5px; /* Add padding for scrollbar */
+}
+
+/* Override for gallery column to ensure exactly 3 cards per row */
+.gallery-column .card-gallery {
+  grid-template-columns: repeat(3, 1fr); /* Force exactly 3 cards per row */
+}
+
+/* For smaller screens, revert to auto-fill to ensure responsiveness */
+@media (max-width: 768px) {
+  .gallery-column .card-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}
+
+/* Remove the old debugging hidden class */
+.hidden {
+  display: none !important;
+}
+
+/* Card count badge style */
+.card-count-badge {
+  font-size: 0.85rem;
+  font-weight: bold;
+  padding: 0.25rem 0.5rem;
+  border-radius: 50%;
+  background-color: #0dcaf0;
+  color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Full-size card popup styles */
+.card-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.card-popup-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.card-popup-container {
+  max-width: 90%;
+  max-height: 90vh;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scale(0.9);
+  transition: transform 0.3s;
+  position: relative;
+}
+
+.card-popup-overlay.active .card-popup-container {
+  transform: scale(1);
+}
+
+.card-popup-image {
+  max-width: 100%;
+  max-height: 90vh;
+  object-fit: contain;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+.card-popup-close {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  background-color: white;
+  color: black;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  transition: background-color 0.2s;
+  font-size: 1.2rem;
+  border: none;
+}
+
+.card-popup-close:hover {
+  background-color: #f8f9fa;
+}
+
+.btn-fullsize {
+  margin-top: 10px;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #212529;
+  border: none;
+  transition: all 0.2s ease;  /* Changed from just background-color to all */
+  position: relative; /* For tooltip effect */
+}
+
+.btn-fullsize:hover {
+  background-color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Tooltip indicating preview functionality */
+.btn-fullsize::after {
+  content: "Preview";
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.7rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.btn-fullsize:hover::after {
+  opacity: 1;
+}
+
+/* Button alignment fixes */
+.card-info .d-flex {
+  align-items: center; /* Ensure vertical alignment */
+}
+
+.add-card-form {
+  margin: 0; /* Remove any margin that might be affecting alignment */
+  display: flex; /* Make the form a flex container */
+  align-items: center; /* Center align form contents */
+}
+
+.card-info .btn {
+  height: 28px; /* Reduced from 32px */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  line-height: 1;
+  font-size: 0.8rem; /* Added font size reduction */
+}
+
+.card-info .btn-primary {
+  width: 28px; /* Reduced from 32px */
+}
+
+.card-info .btn-fullsize {
+  margin-top: 0; /* Override the margin-top to align with the add button */
+  padding-top: 0;
+  padding-bottom: 0;
+  line-height: 1;
+}
+
+.card-info .btn i {
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* Card type tabs styles */
+.nav-tabs .nav-link {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.94rem;
+}
+
+/* Deck section styles */
+.deck-section {
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.deck-section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.deck-section-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* Restored to original size */
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .deck-section-content {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Restored to original size */
+  }
+}
+
+@media (min-width: 1200px) {
+  .deck-section-content {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Restored to original size */
+  }
+}
+
+.level-1-section {
+  background-color: rgba(76, 175, 80, 0.05);
+}
+
+.level-2-section {
+  background-color: rgba(33, 150, 243, 0.05);
+}
+
+.level-3-section {
+  background-color: rgba(156, 39, 176, 0.05);
+}
+
+.not-cookies-section {
+  background-color: rgba(158, 158, 158, 0.05);
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Adjusting the spacing between filter groups */
+.d-flex.flex-wrap.mb-3 {
+  margin-bottom: 0.75rem !important;
+}
+
+/* Add extra space only before the clear filters button */
+.d-flex.justify-content-end {
+  margin-top: 0.5rem;
+}
+
+/* Responsive adjustments for the card gallery */
+@media (max-width: 576px) {
+  .card-gallery {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); /* Even smaller on mobile */
+  }
+  
+  .card-container {
+    height: 220px; /* Smaller height on mobile */
+  }
+  
+  .card-overlay {
+    padding: 0.5rem;
+  }
+  
+  .card-info h5 {
+    font-size: 0.85rem;
+  }
+  
+  .card-description {
+    font-size: 0.7rem;
+  }
+}
+
+/* Override for buttons on very small screens */
+@media (max-width: 350px) {
+  .btn-fullsize span {
+    display: none; /* Hide "Full Size" text on very small screens */
+  }
+}
+
+/* Card hover preview popup */
+.card-hover-preview {
+  position: fixed;
+  z-index: 9000;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.2s, transform 0.2s;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  background-color: white;
+  max-height: 70vh;
+  max-width: 300px;
+}
+
+.card-hover-preview.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card-hover-preview img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+/* Adding some margin to the button container to balance the layout */
+.card-info .d-flex.justify-content-center {
+  margin-top: 0.5rem;
+}

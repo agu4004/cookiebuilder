@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${card.id == null ? 'Add New Card' : 'Edit Card'} + ' - Cookie Run Deck Builder'"></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 th:text="${card.id == null ? 'Add New Card' : 'Edit Card'}"></h1>
+            <a th:href="@{/admin/cards}" class="btn btn-outline-secondary">Back to Card List</a>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <form th:action="@{/admin/cards/save}" th:object="${card}" method="post">
+                    <input type="hidden" th:field="*{id}" />
+                    <input type="hidden" th:field="*{version}" />
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="title" class="form-label">Card Title</label>
+                            <input type="text" class="form-control" id="title" th:field="*{title}" required>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label for="cardNo" class="form-label">Card Number</label>
+                            <input type="text" class="form-control" id="cardNo" th:field="*{cardNo}" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="cardType" class="form-label">Card Type</label>
+                            <input type="text" class="form-control" id="cardType" th:field="*{cardType}">
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label for="cardTypeTitle" class="form-label">Card Type Title</label>
+                            <input type="text" class="form-control" id="cardTypeTitle" th:field="*{cardTypeTitle}">
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label for="rarity" class="form-label">Rarity</label>
+                            <select class="form-select" id="rarity" th:field="*{rarity}">
+                                <option value="">Select Rarity</option>
+                                <option value="Common">Common</option>
+                                <option value="Uncommon">Uncommon</option>
+                                <option value="Rare">Rare</option>
+                                <option value="Super Rare">Super Rare</option>
+                                <option value="Ultra Rare">Ultra Rare</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="energyType" class="form-label">Energy Type</label>
+                            <select class="form-select" id="energyType" th:field="*{energyType}">
+                                <option value="">Select Energy Type</option>
+                                <option value="green">green</option>
+                                <option value="blue">blue</option>
+                                <option value="red">red</option>
+                                <option value="yellow">yellow</option>
+                                <option value="purple">purple</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label for="energyTypeTitle" class="form-label">Energy Type Title</label>
+                            <select class="form-select" id="energyTypeTitle" th:field="*{energyTypeTitle}">
+                                <option value="">Select Energy Type Title</option>
+                                <option value="Green">Green</option>
+                                <option value="Blue">Blue</option>
+                                <option value="Red">Red</option>
+                                <option value="Yellow">Yellow</option>
+                                <option value="Purple">Purple</option>
+                            </select>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label for="hp" class="form-label">HP</label>
+                            <input type="text" class="form-control" id="hp" th:field="*{hp}">
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-4">
+                            <label for="cardLevel" class="form-label">Card Level</label>
+                            <input type="text" class="form-control" id="cardLevel" th:field="*{cardLevel}">
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label for="cardLevelTitle" class="form-label">Card Level Title</label>
+                            <input type="text" class="form-control" id="cardLevelTitle" th:field="*{cardLevelTitle}">
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <label for="grade" class="form-label">Grade</label>
+                            <input type="text" class="form-control" id="grade" th:field="*{grade}">
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="productTitle" class="form-label">Product Title</label>
+                            <input type="text" class="form-control" id="productTitle" th:field="*{productTitle}">
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label for="artistTitle" class="form-label">Artist</label>
+                            <input type="text" class="form-control" id="artistTitle" th:field="*{artistTitle}">
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="productCategory" class="form-label">Product Category</label>
+                            <input type="text" class="form-control" id="productCategory" th:field="*{productCategory}">
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <label for="productCategoryTitle" class="form-label">Product Category Title</label>
+                            <input type="text" class="form-control" id="productCategoryTitle" th:field="*{productCategoryTitle}">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="cardImage" class="form-label">Card Image URL</label>
+                        <input type="text" class="form-control" id="cardImage" th:field="*{cardImage}">
+                        <div class="form-text">Enter the full URL to the card image</div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="elementId" class="form-label">Element ID</label>
+                        <input type="number" class="form-control" id="elementId" th:field="*{elementId}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="cardDesc" class="form-label">Card Description</label>
+                        <textarea class="form-control" id="cardDesc" th:field="*{cardDesc}" rows="5"></textarea>
+                        <div class="form-text">HTML formatting is supported (e.g., &lt;br&gt; for line breaks)</div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end gap-2">
+                        <a th:href="@{/admin/cards}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Save Card</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

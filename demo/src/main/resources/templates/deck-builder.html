@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Run Card Deck Builder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Cookie Run Card Deck Builder</h1>
+        </div>
+        
+        <div th:if="${noCards}" class="alert alert-warning">
+            <h4 class="alert-heading">No cards found in the database!</h4>
+            <p>The card database appears to be empty. Please add some cards through the admin interface.</p>
+            <hr>
+            <a th:href="@{/admin/cards}" class="btn btn-primary">Go to Card Admin</a>
+        </div>
+        
+        <div th:unless="${noCards}" class="row">
+            <!-- Card Gallery -->
+            <div class="col-lg-6 mb-4 gallery-column">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">Card Gallery</h2>
+                        <div>
+                            <form th:action="@{/search}" method="get" class="d-inline-flex">
+                                <input type="text" name="query" class="form-control me-2" placeholder="Search cards...">
+                                <button type="submit" class="btn btn-outline-secondary">
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Filter Options -->
+                        <div class="filter-section">
+                            <div class="filter-title">Energy Type</div>
+                            <div class="d-flex flex-wrap mb-3">
+                                <div class="filter-badge energy-filter" data-energy="">All Energy</div>
+                                <div class="filter-badge energy-filter energy-filter-green" data-energy="Green">Green</div>
+                                <div class="filter-badge energy-filter energy-filter-blue" data-energy="Blue">Blue</div>
+                                <div class="filter-badge energy-filter energy-filter-red" data-energy="Red">Red</div>
+                                <div class="filter-badge energy-filter energy-filter-yellow" data-energy="Yellow">Yellow</div>
+                                <div class="filter-badge energy-filter energy-filter-purple" data-energy="Purple">Purple</div>
+                                <div class="filter-badge energy-filter energy-filter-mix" data-energy="Mix">Mix</div>
+                            </div>
+                            
+                            <div class="filter-title">Rarity</div>
+                            <div class="d-flex flex-wrap mb-3">
+                                <div class="filter-badge rarity-filter" data-rarity="">All Rarities</div>
+                                <div class="filter-badge rarity-filter rarity-filter-common" data-rarity="COMMON">Common</div>
+                                <div class="filter-badge rarity-filter rarity-filter-uncommon" data-rarity="UNCOMMON">Uncommon</div>
+                                <div class="filter-badge rarity-filter rarity-filter-rare" data-rarity="RARE">Rare</div>
+                                <div class="filter-badge rarity-filter rarity-filter-super-rare" data-rarity="SUPER RARE">Super Rare</div>
+                                <div class="filter-badge rarity-filter rarity-filter-ultra-rare" data-rarity="ULTRA RARE">Ultra Rare</div>
+                                <div class="filter-badge rarity-filter rarity-filter-secret-rare" data-rarity="SECRET RARE">Secret Rare</div>
+                                <div class="filter-badge rarity-filter rarity-filter-secret-super-rare" data-rarity="SECRET SUPER RARE">Secret Super Rare</div>
+                                <div class="filter-badge rarity-filter rarity-filter-secret-ultra-rare" data-rarity="SECRET ULTRA RARE">Secret Ultra Rare</div>
+                                <div class="filter-badge rarity-filter rarity-filter-promotion" data-rarity="PROMOTION">Promotion</div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-end">
+                                <button id="clearFilters" class="btn btn-sm btn-outline-secondary me-2">Clear Filters</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Card Type Tabs -->
+                        <ul class="nav nav-tabs mb-3" id="cardTypeTabs" role="tablist">
+                            <li class="nav-item" role="presentation" th:each="type, iterStat : ${cardTypes}">
+                                <button class="nav-link" 
+                                        th:classappend="${type == selectedType ? 'active' : ''}"
+                                        th:id="${type + '-tab'}" 
+                                        data-bs-toggle="tab" 
+                                        th:data-bs-target="${'#' + type.replace(' ', '_')}" 
+                                        type="button" 
+                                        role="tab" 
+                                        th:aria-controls="${type}" 
+                                        th:aria-selected="${type == selectedType}">
+                                    <span th:text="${type}"></span>
+                                </button>
+                            </li>
+                        </ul>
+                        
+                        <!-- Card Type Content -->
+                        <div class="tab-content" id="cardTypeContent">
+                            <div th:each="type : ${cardTypes}" 
+                                 class="tab-pane fade" 
+                                 th:classappend="${type == selectedType ? 'show active' : ''}"
+                                 th:id="${type.replace(' ', '_')}" 
+                                 role="tabpanel" 
+                                 th:aria-labelledby="${type + '-tab'}">
+                                
+                                <div class="card-gallery">
+                                    <div th:each="card : ${cardsByType.get(type)}" class="card-container">
+                                        <div class="tcg-card"
+                                            th:data-energy-type="${card.energyType}"
+                                            th:data-rarity="${card.grade}">
+                                            <img th:src="${card.cardImage}" class="card-img" alt="Card Image">
+                                            
+                                            <div class="card-overlay">
+                                                <div class="card-info">
+                                                    <h5 th:text="${card.title}"></h5>
+                                                    <p th:if="${card.cardLevelTitle}" class="mb-1">
+                                                        Level: <span th:text="${card.cardLevelTitle}"></span>
+                                                    </p>
+                                                    <div class="d-flex justify-content-center gap-2">
+                                                        <form th:action="@{/deck/add/{id}(id=${card.id})}" method="post" class="add-card-form">
+                                                            <button type="submit" class="btn btn-primary btn-sm rounded-circle">
+                                                                <i class="bi bi-plus"></i>
+                                                            </button>
+                                                        </form>
+                                                        <button type="button" class="btn btn-sm btn-fullsize rounded-pill"
+                                                                onclick="openCardPopup(this)" 
+                                                                th:data-card-image="${card.cardImage}"
+                                                                th:data-energy-type="${card.energyType}"
+                                                                th:data-rarity="${card.grade}">
+                                                            <i class="bi bi-fullscreen"></i> <span>Full Size</span>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Deck List -->
+            <div class="col-lg-6 deck-column">
+                <div class="card h-100 sticky-deck">
+                    <div class="card-body">
+                        <h2 class="card-title d-flex justify-content-between align-items-center">
+                            Your Deck
+                            <span class="badge bg-primary" id="deck-size" th:text="${deck.size}"></span>
+                        </h2>
+                        
+                        <!-- Empty deck message (hidden by JS when cards are added) -->
+                        <div id="empty-deck-message" class="text-center py-4 text-muted" th:style="${deck.size > 0 ? 'display: none;' : ''}">
+                            <p>Your deck is empty. Click the + button on cards to add them.</p>
+                        </div>
+                        
+                        <!-- Deck list (updated by JS) -->
+                        <div id="deck-list" class="deck-list" th:style="${deck.size == 0 ? 'display: none;' : ''}">
+                            <div th:if="${deck.size > 0}" th:each="entry, iterStat : ${deck.cardCounts}" class="deck-card-item">
+                                <div class="d-flex align-items-center">
+                                    <div class="deck-card-image">
+                                        <img th:src="${entry.value.card.cardImage}" alt="Card thumbnail">
+                                    </div>
+                                    <div class="deck-card-details">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <h6 th:text="${entry.value.card.title}"></h6>
+                                            <span class="text-muted small" th:text="${'x' + entry.value.count}"></span>
+                                        </div>
+                                        <div class="d-flex gap-1 mb-1">
+                                            <span class="badge" 
+                                                  th:if="${entry.value.card.energyType}"
+                                                  th:classappend="${'energy-' + entry.value.card.energyType.toLowerCase()}"
+                                                  th:text="${entry.value.card.energyTypeTitle}"></span>
+                                            <span class="badge" 
+                                                  th:text="${entry.value.card.cardTypeTitle}"></span>
+                                        </div>
+                                    </div>
+                                    <form th:action="@{/deck/remove/{index}(index=${iterStat.index})}" method="post" class="ms-auto remove-card-form">
+                                        <button type="submit" class="btn btn-sm text-danger remove-card-btn">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/script.js}"></script>
+    
+    <!-- Card Full Size Popup -->
+    <div id="cardPopupOverlay" class="card-popup-overlay">
+        <div class="card-popup-container">
+            <img id="cardPopupImage" class="card-popup-image" src="" alt="Card Full Size">
+            <button id="cardPopupClose" class="card-popup-close">
+                <i class="bi bi-x"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Card Hover Preview -->
+    <div id="cardHoverPreview" class="card-hover-preview">
+        <img id="previewImage" src="" alt="Card Preview">
+    </div>
+</body>
+</html>
+

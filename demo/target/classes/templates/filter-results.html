@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filter Results - Cookie Run Deck Builder</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Filter Results</h1>
+            <a th:href="@{/}" class="btn btn-outline-secondary">Back to Deck Builder</a>
+        </div>
+        
+        <div class="row">
+            <!-- Left Column - Filter and Results -->
+            <div class="col-lg-6 gallery-column">
+                <!-- Filter Criteria -->
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Filter Criteria</h5>
+                        
+                        <div class="filter-section">
+                            <div class="filter-title">Energy Type</div>
+                            <div class="d-flex flex-wrap mb-3">
+                                <div class="filter-badge energy-filter" 
+                                     data-energy=""
+                                     th:classappend="${energyType == null || energyType.isEmpty() ? 'active' : ''}">All Energy</div>
+                                <div class="filter-badge energy-filter energy-filter-green" 
+                                     data-energy="Green"
+                                     th:classappend="${energyType == 'Green' ? 'active' : ''}">Green</div>
+                                <div class="filter-badge energy-filter energy-filter-blue" 
+                                     data-energy="Blue"
+                                     th:classappend="${energyType == 'Blue' ? 'active' : ''}">Blue</div>
+                                <div class="filter-badge energy-filter energy-filter-red" 
+                                     data-energy="Red"
+                                     th:classappend="${energyType == 'Red' ? 'active' : ''}">Red</div>
+                                <div class="filter-badge energy-filter energy-filter-yellow" 
+                                     data-energy="Yellow"
+                                     th:classappend="${energyType == 'Yellow' ? 'active' : ''}">Yellow</div>
+                                <div class="filter-badge energy-filter energy-filter-purple" 
+                                     data-energy="Purple"
+                                     th:classappend="${energyType == 'Purple' ? 'active' : ''}">Purple</div>
+                                <div class="filter-badge energy-filter energy-filter-mix" 
+                                     data-energy="Mix"
+                                     th:classappend="${energyType == 'Mix' ? 'active' : ''}">Mix</div>
+                            </div>
+                            
+                            <div class="filter-title">Rarity</div>
+                            <div class="d-flex flex-wrap mb-3">
+                                <div class="filter-badge rarity-filter" 
+                                     data-rarity=""
+                                     th:classappend="${rarity == null || rarity.isEmpty() ? 'active' : ''}">All Rarities</div>
+                                <div class="filter-badge rarity-filter rarity-filter-common" 
+                                     data-rarity="Common"
+                                     th:classappend="${rarity == 'Common' ? 'active' : ''}">Common</div>
+                                <div class="filter-badge rarity-filter rarity-filter-uncommon" 
+                                     data-rarity="Uncommon"
+                                     th:classappend="${rarity == 'Uncommon' ? 'active' : ''}">Uncommon</div>
+                                <div class="filter-badge rarity-filter rarity-filter-rare" 
+                                     data-rarity="Rare"
+                                     th:classappend="${rarity == 'Rare' ? 'active' : ''}">Rare</div>
+                                <div class="filter-badge rarity-filter rarity-filter-super-rare" 
+                                     data-rarity="Super Rare"
+                                     th:classappend="${rarity == 'Super Rare' ? 'active' : ''}">Super Rare</div>
+                                <div class="filter-badge rarity-filter rarity-filter-ultra-rare" 
+                                     data-rarity="Ultra Rare"
+                                     th:classappend="${rarity == 'Ultra Rare' ? 'active' : ''}">Ultra Rare</div>
+                            </div>
+                            
+                            <div class="d-flex justify-content-end">
+                                <button id="clearFilters" class="btn btn-sm btn-outline-secondary me-2">Clear Filters</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Results -->
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title mb-4">Results</h2>
+                        
+                        <div th:if="${cards.isEmpty()}" class="alert alert-info">
+                            No cards found matching your filter criteria.
+                        </div>
+                        
+                        <div th:unless="${cards.isEmpty()}" class="row row-cols-1 row-cols-sm-2 row-cols-md-2 g-3">
+                            <div th:each="card : ${cards}" class="col">
+                                <div class="card-container">
+                                    <div class="tcg-card"
+                                        th:data-energy-type="${card.energyType}"
+                                        th:data-rarity="${card.rarity}"
+                                        th:data-card-desc="${card.field_cardDesc}"
+                                        th:data-card-type="${card.cardType}">
+                                        <img th:src="${card.cardImage}" class="card-img" alt="Card Image">
+                                        
+                                        <div class="card-overlay">
+                                            <div class="card-info">
+                                                <h5 th:text="${card.title}"></h5>
+                                                <p th:if="${card.cardLevelTitle}" class="mb-1">
+                                                    Level: <span th:text="${card.cardLevelTitle}"></span>
+                                                </p>
+                                                <div class="d-flex justify-content-center gap-2">
+                                                    <form th:action="@{/deck/add/{id}(id=${card.id})}" method="post" class="add-card-form">
+                                                        <button type="submit" class="btn btn-primary btn-sm rounded-circle">
+                                                            <i class="bi bi-plus"></i>
+                                                        </button>
+                                                    </form>
+                                                    <button type="button" class="btn btn-sm btn-fullsize rounded-pill"
+                                                            onclick="openCardPopup(this)" 
+                                                            th:data-card-image="${card.cardImage}"
+                                                            th:data-energy-type="${card.energyType}"
+                                                            th:data-rarity="${card.rarity}">
+                                                        <i class="bi bi-fullscreen"></i> <span>Full Size</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Column - Deck Display -->
+            <div class="col-lg-6 deck-column">
+                <!-- Deck Display Section -->
+                <div class="card mb-4 sticky-deck">
+                    <div class="card-body">
+                        <h2 class="card-title d-flex justify-content-between align-items-center">
+                            Your Deck
+                            <span class="badge bg-primary" id="deck-size">0</span>
+                        </h2>
+                        <div id="empty-deck-message" class="text-center py-4 text-muted">
+                            <p>Your deck is empty. Add cards to get started!</p>
+                        </div>
+                        <div id="deck-list" class="row row-cols-1 row-cols-md-3 g-3">
+                            <!-- Deck content will be loaded via JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/script.js}"></script>
+    
+    <!-- Card Full Size Popup -->
+    <div id="cardPopupOverlay" class="card-popup-overlay">
+        <div class="card-popup-container">
+            <img id="cardPopupImage" class="card-popup-image" src="" alt="Card Full Size">
+            <button id="cardPopupClose" class="card-popup-close">
+                <i class="bi bi-x"></i>
+            </button>
+        </div>
+    </div>
+    
+    <!-- Card Hover Preview -->
+    <div id="cardHoverPreview" class="card-hover-preview">
+        <img id="previewImage" src="" alt="Card Preview">
+    </div>
+</body>
+</html>
+
